@@ -15,7 +15,19 @@ But in the future you will be also be able to attach commands on event like `Vim
 
 ## Installation
 
-git clone this repo where you want (the destination doesn't matter) :
+First of all you need to install [pynvim](https://github.com/neovim/pynvim) that is a python client for neovim. (and that's what makes this plugin run so good luck without it !)
+
+Follow the instructions [here](https://github.com/neovim/pynvim?tab=readme-ov-file#install) to install `pynvim` on you machine and come back.
+
+> [!IMPORTANT]
+> If you don't have installed `pynvim`, the plugin won't work.
+> You can check your installation with the command in `nvim` : `:checkhealth provider` and it should return cometing like this :
+```
+- INFO: Using: /usr/bin/python3
+- INFO: pynvim: yes
+```
+
+Now, git clone this repo where you want (the destination doesn't matter) :
 ```bash
 cd /where/you/want
 git clone https://github.com/Rrominet/nvim-hooks 
