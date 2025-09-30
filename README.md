@@ -10,7 +10,8 @@ For example, you can :
 For now, it only works with the command that run on buffers.    
 But in the future you will be also be able to attach commands on event like `VimEnter`, `VimLeave`, `BufEnter` and `BufLeave`.
 
-> [!NOTE] For now, it has only be tested on Linux.
+> [!NOTE]
+> For now, it has only be tested on Linux.
 
 ## Installation
 
@@ -52,12 +53,14 @@ Here is a minimal example :
 ```
 
 This would simply execute the command `echo 'BufWritePost on $file'` when you save the file `/tmp/test.md`.  
-`BufWritePost` being the event executing by `nvim` just after he has saved a file.
+`BufWritePost` being the event executing by `nvim` just after it has saved a file.
 
-The file `hooks.json` contains an array of objects that hace 3 keys :   
- - `event` : the event to attach the commands to. (a single string - you can see all the events you can listen too [here](#neovim-events-reference.)
+The file `hooks.json` contains an array of objects that have 3 keys :   
+ - `event` : the event to attach the commands to. (a single string - you can see all the events you can listen too [here](#neovim-events-reference)
  - `commands` : the commands to execute. (an array of strings where each string is a complete shell command. You can use the variable `$file` in it that will be replaced by the current file that received the event)
  - `files` : the filepaths you want these commands to be executed on. If your file is not in there, the commands will not be executed. (an array of strings where each string is a filepath)
+
+When you modify your `hooks.json` file, you don't need to restart `nvim`, you can just hit the command `:ReloadHooks` and you're good to go.
 
 Aaaand you're done !  
 Good Luck ! 
