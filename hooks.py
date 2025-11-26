@@ -44,8 +44,6 @@
 #Syntax – after setting syntax
 #
 #Neovim-specific events
-#ChanOpen – a channel opened
-#ChanClose – a channel closed
 #CmdUndefined – command is undefined
 #DirChanged – working directory changed
 #Signal – received a signal
@@ -56,6 +54,7 @@
 import pynvim
 import os
 import json
+from ml import fileTools as ft
 
 @pynvim.plugin
 class Hooks(object) : 
@@ -63,10 +62,10 @@ class Hooks(object) :
         self.nvim = nvim
         self.config = None
         self.active = False
+        self.configpath = os.path.expanduser("~") + "/.config/nvim/hooks.json"
 
     def loadConfig(self):
         self.config = None
-        self.configpath = os.path.expanduser("~") + "/.config/nvim/hooks.json"
         if not os.path.exists(self.configpath):
             self.nvim.out_write(f"Config file {self.configpath} not found. Hooks rplugin disabled.\n")
             return
@@ -94,6 +93,12 @@ class Hooks(object) :
     @pynvim.command('ReloadHooks', nargs='*', range='')
     def reloadConfig(self, args, _range):
         self.loadConfig()
+
+    @pynvim.command('ConfigHooks', nargs='*', range='')
+    def openConfig(self, args, _range):
+        if not os.path.isdir(ft.parent(self.configpath)) : 
+            os.makedirs(ft.parent(self.configpath))
+        self.nvim.command(":e " + self.configpath)
 
     # -------------------------
     # Buffer events
@@ -229,9 +234,6 @@ class Hooks(object) :
     # -------------------------
     # Neovim-specific events
     # -------------------------
-    @pynvim.autocmd('ChanOpen', pattern='*', sync=True)
-    def _ChanOpen(self): self.on_event("ChanOpen")
-
     @pynvim.autocmd('CmdUndefined', pattern='*', sync=True)
     def _CmdUndefined(self): self.on_event("CmdUndefined")
 
